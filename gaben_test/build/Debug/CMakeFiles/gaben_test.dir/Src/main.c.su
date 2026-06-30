@@ -1,0 +1,11 @@
+C:/Users/user/Desktop/gaben_test/Src/main.c:59:6:SystemInit	4	static
+C:/Users/user/Desktop/gaben_test/Src/main.c:68:13:delay_ms	24	static,ignoring_inline_asm
+C:/Users/user/Desktop/gaben_test/Src/main.c:77:13:serial_write_char	16	static
+C:/Users/user/Desktop/gaben_test/Src/main.c:84:13:serial_write_string	16	static
+C:/Users/user/Desktop/gaben_test/Src/main.c:91:13:serial_write_u32	32	static
+C:/Users/user/Desktop/gaben_test/Src/main.c:111:13:serial_write_millivolts	16	static
+C:/Users/user/Desktop/gaben_test/Src/main.c:120:13:serial_write_tenths	16	static
+C:/Users/user/Desktop/gaben_test/Src/main.c:127:13:serial_init	4	static
+C:/Users/user/Desktop/gaben_test/Src/main.c:139:13:adc1_init	8	static
+C:/Users/user/Desktop/gaben_test/Src/main.c:160:17:adc1_read_channel0	4	static
+C:/Users/user/Desktop/gaben_test/Src/main.c:169:5:main	24	static
