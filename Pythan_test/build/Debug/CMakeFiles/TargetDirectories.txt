@@ -1,0 +1,3 @@
+C:/Users/user/Desktop/Pythan_test/build/Debug/CMakeFiles/Pythan_test.dir
+C:/Users/user/Desktop/Pythan_test/build/Debug/CMakeFiles/edit_cache.dir
+C:/Users/user/Desktop/Pythan_test/build/Debug/CMakeFiles/rebuild_cache.dir
