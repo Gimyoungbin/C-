@@ -69,8 +69,10 @@
 #define NOTE_1              262U
 #define NOTE_2              294U
 #define NOTE_3              330U
+#define NOTE_4              349U
 #define NOTE_5              392U
 #define NOTE_6              440U
+#define NOTE_FLAT_7         466U
 #define NOTE_7              494U
 #define NOTE_HIGH_1         523U
 #define NOTE_HIGH_2         587U
@@ -78,8 +80,14 @@
 #define NOTE_HIGH_4         698U
 #define NOTE_HIGH_5         784U
 #define NOTE_HIGH_6         880U
+#define NOTE_HIGH_7         988U
 #define NOTE_DOUBLE_HIGH_1  1046U
-#define NOTE_DURATION_MS    135U
+#define NOTE_DURATION_MS    105U
+#define COUNTDOWN_BEEP_HZ   1000U
+#define GO_BEEP_HZ          2000U
+#define COUNTDOWN_BEEP_MS   180U
+#define COUNTDOWN_STEP_MS   1000U
+#define GO_BEEP_MS          500U
 
 typedef enum
 {
@@ -115,6 +123,8 @@ static void go_led_off(void);
 static void buzzer_on(void);
 static void buzzer_off(void);
 static void play_tone(uint32_t frequency_hz, uint32_t duration_ms);
+static void play_countdown_beep(void);
+static void play_go_beep(void);
 static void play_success_song(void);
 static void play_fail_sound(void);
 static void all_leds_on(void);
@@ -168,17 +178,20 @@ int main(void)
 
             usart2_write_string("3\r\n");
             countdown_led_on(LED_3_PIN);
-            delay_ms(1000U);
+            play_countdown_beep();
+            delay_ms(COUNTDOWN_STEP_MS - COUNTDOWN_BEEP_MS);
             countdown_led_off(LED_3_PIN);
 
             usart2_write_string("2\r\n");
             countdown_led_on(LED_2_PIN);
-            delay_ms(1000U);
+            play_countdown_beep();
+            delay_ms(COUNTDOWN_STEP_MS - COUNTDOWN_BEEP_MS);
             countdown_led_off(LED_2_PIN);
 
             usart2_write_string("1\r\n");
             countdown_led_on(LED_1_PIN);
-            delay_ms(1000U);
+            play_countdown_beep();
+            delay_ms(COUNTDOWN_STEP_MS - COUNTDOWN_BEEP_MS);
             countdown_led_off(LED_1_PIN);
 
             countdown_leds_off();
@@ -207,6 +220,7 @@ int main(void)
             go_led_on();
             usart2_write_string("GO!\r\n");
             oled_show_go();
+            play_go_beep();
 
             while (reaction_done == 0U)
             {
@@ -762,15 +776,25 @@ static void play_tone(uint32_t frequency_hz, uint32_t duration_ms)
     buzzer_off();
 }
 
+static void play_countdown_beep(void)
+{
+    play_tone(COUNTDOWN_BEEP_HZ, COUNTDOWN_BEEP_MS);
+}
+
+static void play_go_beep(void)
+{
+    play_tone(GO_BEEP_HZ, GO_BEEP_MS);
+}
+
 static void play_success_song(void)
 {
     static const uint16_t song[] =
     {
-        NOTE_HIGH_5, NOTE_HIGH_6, NOTE_HIGH_5, NOTE_HIGH_3,
-        NOTE_HIGH_1, NOTE_HIGH_3, NOTE_HIGH_5, NOTE_HIGH_6,
-
-        NOTE_HIGH_5, NOTE_HIGH_3, NOTE_HIGH_2, NOTE_REST,
-        NOTE_HIGH_1, NOTE_REST, NOTE_REST, NOTE_REST,
+        NOTE_HIGH_1, NOTE_HIGH_5, NOTE_HIGH_3, NOTE_HIGH_6,
+        NOTE_DOUBLE_HIGH_1, NOTE_HIGH_7, NOTE_HIGH_6, NOTE_HIGH_5,
+        NOTE_HIGH_3, NOTE_HIGH_5, NOTE_HIGH_6, NOTE_HIGH_4,
+        NOTE_HIGH_5, NOTE_HIGH_3, NOTE_HIGH_1, NOTE_HIGH_2,
+        NOTE_DOUBLE_HIGH_1,
     };
 
     for (uint32_t i = 0U; i < (sizeof(song) / sizeof(song[0])); i++)
